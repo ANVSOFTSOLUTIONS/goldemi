@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI & Interest Calculators | Golden Letters Online Solutions Pvt Ltd</title>
+  <meta name="description" content="Calculate gold loan interest rates, monthly EMI installments, and instant gold cash payouts with Golden Letters Online Solutions Private Limited transparent financial calculator suite.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Live Gold Rate Ticker -->
+  <div class="top-ticker">
+    <div class="container ticker-wrap">
+      <div class="ticker-items">
+        <div class="ticker-item">
+          <i class="fa-solid fa-chart-line text-gold"></i>
+          <span class="ticker-label">LIVE MARKET:</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-label">Gold 24K (10g):</span>
+          <span class="ticker-val" id="rate-24k">$742.50</span>
+          <span class="ticker-badge badge-up"><i class="fa-solid fa-arrow-up"></i> +0.45%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-label">Gold 22K (10g):</span>
+          <span class="ticker-val" id="rate-22k">$680.60</span>
+          <span class="ticker-badge badge-up"><i class="fa-solid fa-arrow-up"></i> +0.38%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-label">Gold 18K (10g):</span>
+          <span class="ticker-val" id="rate-18k">$556.80</span>
+          <span class="ticker-badge badge-up"><i class="fa-solid fa-arrow-up"></i> +0.41%</span>
+        </div>
+      </div>
+      <div class="top-contact-info">
+        <a href="tel:+18005554653"><i class="fa-solid fa-phone text-gold"></i> 1-800-GOLDEN-LETTERS</a>
+        <a href="mailto:support@goldenletters.com"><i class="fa-solid fa-envelope text-gold"></i> support@goldenletters.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fa-solid fa-crown"></i></div>
+        <span>GOLDEN <span class="text-gold">LETTERS</span></span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="calculator.html" class="nav-link active">EMI & Calculators</a></li>
+        <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        <li><a href="contact.html" class="btn btn-gold btn-sm"><i class="fa-solid fa-bolt"></i> Instant Quote</a></li>
+      </ul>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Page Header Banner -->
+  <header class="section" style="background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 70%); text-align: center; padding: 4rem 0 3rem;">
+    <div class="container">
+      <span class="sub-title">Financial Decision Tools</span>
+      <h1 class="heading-lg">Interest & EMI <span class="text-gold">Calculators</span></h1>
+      <p style="color: var(--text-muted); max-width: 650px; margin: 1rem auto 0; font-size: 1.1rem;">
+        Golden Letters Online Solutions Private Limited — Plan your gold loans, monthly installments, or estimate selling payouts with complete financial accuracy.
+      </p>
+    </div>
+  </header>
+
+  <!-- Financial Suite & Calculators Section -->
+  <section class="section finance-section">
+    <div class="container">
+      <div class="calc-container">
+        <!-- Navigation Tabs -->
+        <div class="calc-tabs">
+          <button class="calc-tab active" data-tab="tab-loan">
+            <i class="fa-solid fa-calculator"></i> Gold Loan & Interest EMI
+          </button>
+          <button class="calc-tab" data-tab="tab-purchase">
+            <i class="fa-solid fa-coins"></i> Buy Gold on EMI Plan
+          </button>
+          <button class="calc-tab" data-tab="tab-payout">
+            <i class="fa-solid fa-money-bill-wave"></i> Instant Cash Payout Valuer
+          </button>
+        </div>
+
+        <!-- Tab 1: Gold Loan Interest & EMI Calculator -->
+        <div class="calc-tab-content active" id="tab-loan">
+          <div class="calc-form-panel">
+            <h3 class="heading-sm" style="margin-bottom: 1.5rem;">Gold Loan Interest & EMI Estimator</h3>
+            
+            <!-- Loan Amount Slider -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Required Loan Amount</label>
+                <span class="form-value-display" id="loan-amt-val">$50,000</span>
+              </div>
+              <input type="range" class="range-slider" id="loan-amt-slider" min="5000" max="500000" step="5000" value="50000">
+            </div>
+
+            <!-- Interest Rate Slider -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Interest Rate (% Per Annum)</label>
+                <span class="form-value-display" id="loan-rate-val">9.5%</span>
+              </div>
+              <input type="range" class="range-slider" id="loan-rate-slider" min="6" max="24" step="0.25" value="9.5">
+            </div>
+
+            <!-- Tenure Selection Slider -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Tenure Duration (Months)</label>
+                <span class="form-value-display" id="loan-tenure-val">12 Months</span>
+              </div>
+              <input type="range" class="range-slider" id="loan-tenure-slider" min="3" max="60" step="3" value="12">
+            </div>
+
+            <!-- Interest Mode -->
+            <div class="form-group">
+              <label class="form-label" style="margin-bottom: 0.6rem; display: block;">Repayment Frequency</label>
+              <div class="radio-group" id="interest-mode-group">
+                <div class="radio-card active" data-value="monthly">Monthly EMI</div>
+                <div class="radio-card" data-value="bullet">Bullet Repayment (End)</div>
+                <div class="radio-card" data-value="interest_only">Monthly Interest Only</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div class="calc-result-panel">
+            <div class="result-main">
+              <span class="result-main-title">Estimated Monthly EMI</span>
+              <div class="result-main-val" id="res-monthly-emi">$4,384</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Zero Processing Fee & Fixed Monthly Rate</p>
+            </div>
+
+            <div class="result-breakdown">
+              <div class="breakdown-row">
+                <span class="breakdown-label">Principal Amount:</span>
+                <span class="breakdown-val" id="res-principal">$50,000</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Total Interest Payable:</span>
+                <span class="breakdown-val" id="res-total-interest" style="color: var(--gold-light);">$2,608</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Total Payable Amount:</span>
+                <span class="breakdown-val" id="res-total-payable">$52,608</span>
+              </div>
+
+              <!-- Visual Progress Bar -->
+              <div style="margin-top: 1rem;">
+                <div class="breakdown-row" style="font-size: 0.8rem; margin-bottom: 0.2rem;">
+                  <span><i class="fa-solid fa-circle" style="color: var(--gold-bright);"></i> Principal</span>
+                  <span><i class="fa-solid fa-circle" style="color: #3B82F6;"></i> Interest</span>
+                </div>
+                <div class="visual-bar-wrap">
+                  <div class="bar-principal" id="bar-principal" style="width: 95%;"></div>
+                  <div class="bar-interest" id="bar-interest" style="width: 5%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-gold" style="width: 100%;">
+              <i class="fa-solid fa-paper-plane"></i> Apply for Gold Loan
+            </a>
+          </div>
+        </div>
+
+        <!-- Tab 2: Gold EMI Purchase Estimator -->
+        <div class="calc-tab-content" id="tab-purchase">
+          <div class="calc-form-panel">
+            <h3 class="heading-sm" style="margin-bottom: 1.5rem;">Buy Pure Gold Coins & Bars on EMI</h3>
+            
+            <!-- Gold Weight Slider -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Gold Weight (Grams)</label>
+                <span class="form-value-display" id="buy-weight-val">20g</span>
+              </div>
+              <input type="range" class="range-slider" id="buy-weight-slider" min="2" max="250" step="2" value="20">
+            </div>
+
+            <!-- Karat Selector -->
+            <div class="form-group">
+              <label class="form-label" style="margin-bottom: 0.6rem; display: block;">Select Purity Karat</label>
+              <div class="radio-group" id="buy-karat-group">
+                <div class="radio-card active" data-karat="24">24K (999.9 Pure)</div>
+                <div class="radio-card" data-karat="22">22K (916 Hallmarked)</div>
+                <div class="radio-card" data-karat="18">18K (750 Fine)</div>
+              </div>
+            </div>
+
+            <!-- EMI Tenure -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">EMI Tenure (Months)</label>
+                <span class="form-value-display" id="buy-tenure-val">6 Months</span>
+              </div>
+              <input type="range" class="range-slider" id="buy-tenure-slider" min="3" max="24" step="3" value="6">
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div class="calc-result-panel">
+            <div class="result-main">
+              <span class="result-main-title">Monthly EMI Installment</span>
+              <div class="result-main-val" id="res-buy-emi">$255</div>
+              <p style="font-size: 0.85rem; color: var(--success);"><i class="fa-solid fa-check"></i> 0% Interest EMI Scheme Available</p>
+            </div>
+
+            <div class="result-breakdown">
+              <div class="breakdown-row">
+                <span class="breakdown-label">Total Gold Value:</span>
+                <span class="breakdown-val" id="res-buy-total">$1,485</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Down Payment Required:</span>
+                <span class="breakdown-val" id="res-buy-down">$0 (Zero Downpayment)</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Delivery Commitment:</span>
+                <span class="breakdown-val" style="color: var(--gold-light);">Insured Vault Delivery</span>
+              </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-gold" style="width: 100%;">
+              <i class="fa-solid fa-cart-shopping"></i> Reserve Gold EMI Plan
+            </a>
+          </div>
+        </div>
+
+        <!-- Tab 3: Instant Gold Cash Payout Calculator -->
+        <div class="calc-tab-content" id="tab-payout">
+          <div class="calc-form-panel">
+            <h3 class="heading-sm" style="margin-bottom: 1.5rem;">Instant Cash Payout Valuer for Selling Gold</h3>
+            
+            <!-- Selling Weight Slider -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label class="form-label">Ornament / Gold Weight (Grams)</label>
+                <span class="form-value-display" id="sell-weight-val">50g</span>
+              </div>
+              <input type="range" class="range-slider" id="sell-weight-slider" min="1" max="500" step="1" value="50">
+            </div>
+
+            <!-- Karat Selector -->
+            <div class="form-group">
+              <label class="form-label" style="margin-bottom: 0.6rem; display: block;">Gold Purity Grade</label>
+              <div class="radio-group" id="sell-karat-group">
+                <div class="radio-card" data-karat="24">24K (100% Rate)</div>
+                <div class="radio-card active" data-karat="22">22K (91.6% Rate)</div>
+                <div class="radio-card" data-karat="18">18K (75.0% Rate)</div>
+              </div>
+            </div>
+
+            <!-- Condition -->
+            <div class="form-group">
+              <label class="form-label" style="margin-bottom: 0.6rem; display: block;">Article Condition</label>
+              <div class="radio-group" id="sell-cond-group">
+                <div class="radio-card active" data-cond="jewel">Jewelry / Ornaments</div>
+                <div class="radio-card" data-cond="coin">Coins / Bullion</div>
+                <div class="radio-card" data-cond="pledged">Pledged in Bank</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div class="calc-result-panel">
+            <div class="result-main">
+              <span class="result-main-title">Estimated Cash Payout</span>
+              <div class="result-main-val" id="res-sell-payout">$3,403</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Instant IMPS / Cash Handover</p>
+            </div>
+
+            <div class="result-breakdown">
+              <div class="breakdown-row">
+                <span class="breakdown-label">Applied Market Rate (10g):</span>
+                <span class="breakdown-val" id="res-sell-rate">$680.60</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">XRF Testing Charge:</span>
+                <span class="breakdown-val" style="color: var(--success);">$0 (FREE)</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Deductions / Melting Fees:</span>
+                <span class="breakdown-val" style="color: var(--success);">$0 (ZERO Deductions)</span>
+              </div>
+            </div>
+
+            <a href="contact.html" class="btn btn-gold" style="width: 100%;">
+              <i class="fa-solid fa-hand-holding-dollar"></i> Get Instant Cash Now
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp Action -->
+  <a href="https://wa.me/15553829100?text=Hi%20Golden%20Letters,%20I%20want%20to%20inquire%20about%20Gold%20Finance%20and%20EMI%20options" class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="brand-logo" style="margin-bottom: 1rem; display: inline-flex;">
+            <div class="brand-icon"><i class="fa-solid fa-crown"></i></div>
+            <span>GOLDEN <span class="text-gold">LETTERS</span></span>
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 320px;">
+            Golden Letters Online Solutions Private Limited - Premier Gold Buying, Sales, Bank Release, and Flexible Interest & EMI Financial Support. 100% BIS Hallmarked Trust.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="services.html">Sell Old Gold</a></li>
+            <li><a href="services.html">Release Pledged Gold</a></li>
+            <li><a href="calculator.html">Low-Interest Loans</a></li>
+            <li><a href="calculator.html">Gold Buy on EMI</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Golden Letters</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="calculator.html">EMI Calculators</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Trust & Safety</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+            Certified by BIS Hallmark Standards. All financial transactions are secured by Level-5 encryption.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Golden Letters Online Solutions Private Limited. All Rights Reserved.</p>
+        <p>Pure HTML5, CSS3 & JavaScript Static Site</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
