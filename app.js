@@ -3,12 +3,14 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Live Gold Rates (per gram base)
+  // Live Gold Rates (per gram base) - populated from live market API
   let baseRates = {
-    '24k': 74.25, // $74.25 per gram for 24K
-    '22k': 68.06, // $68.06 per gram for 22K
-    '18k': 55.68  // $55.68 per gram for 18K
+    '24k': 74.25, // fallback until first live fetch resolves
+    '22k': 68.06,
+    '18k': 55.68
   };
+  let silverRatePerGram = 9.23;
+  let previousLiveRates = null;
 
   // --- 1. Automatic Nav Link Active State ---
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
@@ -22,28 +24,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- 2. Live Gold Rate Ticker Simulation ---
+  // --- 2. Live Gold Rate Ticker (real spot prices via gold-api.com, no key required) ---
   const el24k = document.getElementById('rate-24k');
   const el22k = document.getElementById('rate-22k');
   const el18k = document.getElementById('rate-18k');
+  const elSilver = document.getElementById('rate-silver');
+  const badge24k = document.getElementById('badge-24k');
+  const badge22k = document.getElementById('badge-22k');
+  const badge18k = document.getElementById('badge-18k');
+  const badgeSilver = document.getElementById('badge-silver');
 
-  function updateTickerPrices() {
-    const changeFactor = 1 + (Math.random() * 0.002 - 0.001);
-    baseRates['24k'] = +(baseRates['24k'] * changeFactor).toFixed(2);
-    baseRates['22k'] = +(baseRates['22k'] * changeFactor).toFixed(2);
-    baseRates['18k'] = +(baseRates['18k'] * changeFactor).toFixed(2);
+  const TROY_OUNCE_GRAMS = 31.1034768;
 
-    if (el24k) el24k.textContent = `$${(baseRates['24k'] * 10).toFixed(2)}`;
-    if (el22k) el22k.textContent = `$${(baseRates['22k'] * 10).toFixed(2)}`;
-    if (el18k) el18k.textContent = `$${(baseRates['18k'] * 10).toFixed(2)}`;
-
-    // Safely trigger calculator updates if present on page
-    if (typeof calculateGoldLoan === 'function') calculateGoldLoan();
-    if (typeof calculateBuyEMI === 'function') calculateBuyEMI();
-    if (typeof calculateSellPayout === 'function') calculateSellPayout();
+  function updateBadge(badgeEl, changePercent) {
+    if (!badgeEl) return;
+    const isUp = changePercent >= 0;
+    badgeEl.classList.toggle('badge-up', isUp);
+    badgeEl.classList.toggle('badge-down', !isUp);
+    const icon = isUp ? 'fa-arrow-up' : 'fa-arrow-down';
+    badgeEl.innerHTML = `<i class="fa-solid ${icon}"></i> ${isUp ? '+' : ''}${changePercent.toFixed(2)}%`;
   }
 
-  setInterval(updateTickerPrices, 8000);
+  async function fetchLiveMetalPrices() {
+    try {
+      const [goldRes, silverRes] = await Promise.all([
+        fetch('https://api.gold-api.com/price/XAU'),
+        fetch('https://api.gold-api.com/price/XAG')
+      ]);
+      const gold = await goldRes.json();
+      const silver = await silverRes.json();
+
+      const gram24k = gold.price / TROY_OUNCE_GRAMS;
+      const newRates = {
+        '24k': +gram24k.toFixed(2),
+        '22k': +(gram24k * 22 / 24).toFixed(2),
+        '18k': +(gram24k * 18 / 24).toFixed(2)
+      };
+      const newSilverRate = +(silver.price / TROY_OUNCE_GRAMS).toFixed(2);
+
+      if (previousLiveRates) {
+        updateBadge(badge24k, ((newRates['24k'] - previousLiveRates['24k']) / previousLiveRates['24k']) * 100);
+        updateBadge(badge22k, ((newRates['22k'] - previousLiveRates['22k']) / previousLiveRates['22k']) * 100);
+        updateBadge(badge18k, ((newRates['18k'] - previousLiveRates['18k']) / previousLiveRates['18k']) * 100);
+        updateBadge(badgeSilver, ((newSilverRate - previousLiveRates.silver) / previousLiveRates.silver) * 100);
+      }
+
+      baseRates = newRates;
+      silverRatePerGram = newSilverRate;
+      previousLiveRates = { ...newRates, silver: newSilverRate };
+
+      if (el24k) el24k.textContent = `$${(newRates['24k'] * 10).toFixed(2)}`;
+      if (el22k) el22k.textContent = `$${(newRates['22k'] * 10).toFixed(2)}`;
+      if (el18k) el18k.textContent = `$${(newRates['18k'] * 10).toFixed(2)}`;
+      if (elSilver) elSilver.textContent = `$${(newSilverRate * 100).toFixed(2)}`;
+
+      // Safely trigger calculator updates if present on page
+      if (typeof calculateGoldLoan === 'function') calculateGoldLoan();
+      if (typeof calculateBuyEMI === 'function') calculateBuyEMI();
+      if (typeof calculateSellPayout === 'function') calculateSellPayout();
+    } catch (err) {
+      console.error('Failed to fetch live metal prices:', err);
+    }
+  }
+
+  fetchLiveMetalPrices();
+  setInterval(fetchLiveMetalPrices, 5 * 60 * 1000);
 
 
   // --- 3. Mobile Navigation Toggle ---
